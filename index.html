@@ -460,6 +460,17 @@
             box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
         }
 
+        /* Copy button */
+        .copy-btn:hover {
+            background: var(--bg-tertiary) !important;
+            border-color: var(--accent) !important;
+            color: var(--accent) !important;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
         /* FAQ Accordion */
         .faq-container {
             max-width: 800px;
@@ -1069,7 +1080,7 @@
                     </ul>
 
                     <p style="color: var(--text-secondary); margin-top: 20px;"><strong>Opción 2: Tu propio dominio</strong></p>
-                    <p style="color: var(--text-secondary); margin-top: 10px;">Si tienes un dominio (como oxiacycles.com), puedes configurar tu propio NIP-05:</p>
+                    <p style="color: var(--text-secondary); margin-top: 10px;">Si tienes un dominio (como tunombre.com), puedes configurar tu propio NIP-05:</p>
                     <ol style="margin-left: 20px; color: var(--text-secondary); margin-top: 10px;">
                         <li>Crea un archivo llamado <code style="background: var(--bg-tertiary); padding: 2px 6px; border-radius: 3px;">nostr.json</code> en la raíz de tu web</li>
                         <li>Añade este contenido (reemplaza con tus datos):
@@ -1329,6 +1340,15 @@
                     <a href="lightning:applealpaca64@phoenixwallet.me" class="lightning-btn">
                         ⚡ Enviar propina
                     </a>
+                    <div style="margin-top: 15px; padding: 12px; background: var(--bg-tertiary); border-radius: 8px; border: 1px solid var(--border);">
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">Lightning Address:</p>
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <code id="lightning-address" style="color: var(--accent); font-size: 0.9rem; word-break: break-all; flex: 1;">applealpaca64@phoenixwallet.me</code>
+                            <button onclick="copyLightning()" class="copy-btn" style="background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; white-space: nowrap; transition: all 0.2s;">
+                                📋 Copiar
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="footer-section">
@@ -1342,7 +1362,7 @@
                 <div class="footer-section">
                     <h4>Contacto</h4>
                     <p style="color: var(--text-secondary); margin-bottom: 15px;">Encuéntrame en Nostr:</p>
-                    <a href="https://njump.me/npub19yw2tgzv5tv7klsl5ffsdzuyuqedq7mnyzd08c2lqpmu70kt7vnqp6wvk3" target="_blank">Ver mi perfil →</a>
+                    <a href="https://primal.net/p/nprofile1qqszj8995px29k0t0c06y5cx3wzwqvks0dejpxhnu90sqa708m9lxfs4gnym0" target="_blank">Ver mi perfil →</a>
                     <p style="color: var(--text-secondary); margin-top: 15px; font-size: 0.9rem;">
                         ¿Feedback? Envíame un zap o DM
                     </p>
@@ -1359,6 +1379,28 @@
     </footer>
 
     <script>
+        // Copy Lightning address
+        function copyLightning() {
+            const address = document.getElementById('lightning-address').textContent;
+            navigator.clipboard.writeText(address).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copiado';
+                btn.style.background = 'var(--accent)';
+                btn.style.color = 'white';
+                btn.style.borderColor = 'var(--accent)';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = 'var(--bg-secondary)';
+                    btn.style.color = 'var(--text-primary)';
+                    btn.style.borderColor = 'var(--border)';
+                }, 2000);
+            }).catch(err => {
+                alert('No se pudo copiar. Cópiala manualmente: ' + address);
+            });
+        }
+
         // Mobile menu toggle
         function toggleMenu() {
             const navMenu = document.getElementById('navMenu');
