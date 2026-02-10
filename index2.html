@@ -1,0 +1,2410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guía completa en español para entender Nostr: el protocolo descentralizado de redes sociales resistente a la censura. Aprende cómo empezar en 5 minutos.">
+    <meta name="keywords" content="nostr, nostr español, nostr guía, protocolo descentralizado, redes sociales descentralizadas, censura, bitcoin, lightning, zaps, como usar nostr, que es nostr, nostr tutorial, wallets nostr, relays nostr">
+    <meta name="author" content="Nostr para Neófitos">
+    <title>Nostr para Neófitos | Guía completa en español 2025</title>
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Nostr para Neófitos | Guía completa en español">
+    <meta property="og:description" content="Aprende qué es Nostr y cómo empezar en 5 minutos. Guía paso a paso en español para usar el protocolo descentralizado de redes sociales.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nostrfacil.com">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nostr para Neófitos | Guía completa en español">
+    <meta name="twitter:description" content="Aprende qué es Nostr y cómo empezar en 5 minutos. Guía paso a paso en español.">
+    
+    <link rel="canonical" href="https://nostrfacil.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🟣</text></svg>">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1e1e1e;
+            --text-primary: #e5e5e5;
+            --text-secondary: #a0a0a0;
+            --accent: #c44dff;
+            --accent-hover: #d470ff;
+            --border: #2a2a2a;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-secondary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        /* Navigation Menu */
+        .nav-menu {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent);
+            background: var(--bg-tertiary);
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .menu-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        section h3 {
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
+            color: var(--accent);
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 1.3rem;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        .warning-box strong {
+            color: var(--danger);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        /* Success Box */
+        .success-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        .success-box strong {
+            color: var(--success);
+        }
+
+        /* Keys Display */
+        .key-example {
+            background: var(--bg-tertiary);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            word-break: break-all;
+            margin: 10px 0;
+            border: 1px solid var(--border);
+        }
+
+        .key-label {
+            color: var(--accent);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .tab:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Client List */
+        .client-list {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .client-item {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .client-item:hover {
+            border-color: var(--accent);
+        }
+
+        .client-info h4 {
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .client-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .client-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .client-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Copy Button */
+        .copy-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Relay Item with Copy */
+        .relay-item {
+            background: var(--bg-tertiary);
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.2s;
+        }
+
+        .relay-item:hover {
+            border-color: var(--accent);
+        }
+
+        .relay-info {
+            flex: 1;
+        }
+
+        .relay-info h4 {
+            color: var(--text-primary);
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .relay-info p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .relay-url {
+            font-family: 'Courier New', monospace;
+            color: var(--accent);
+            font-size: 0.8rem;
+            word-break: break-all;
+        }
+
+        .relay-badge {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .badge-free {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .badge-paid {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        /* Wallet Comparison Table */
+        .wallet-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .wallet-table th,
+        .wallet-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .wallet-table th {
+            background: var(--bg-tertiary);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .wallet-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .wallet-table tr:hover td {
+            background: var(--bg-tertiary);
+        }
+
+        .wallet-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .wallet-type {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .type-custodial {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .type-noncustodial {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        /* Steps */
+        .steps {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-left: 80px;
+        }
+
+        .step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .step h3 {
+            margin-top: 0;
+        }
+
+        /* Collapsible Section */
+        .collapsible {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .collapsible-header {
+            width: 100%;
+            padding: 20px 25px;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .collapsible-header:hover {
+            color: var(--accent);
+        }
+
+        .collapsible-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+            transition: transform 0.3s;
+        }
+
+        .collapsible.active .collapsible-icon {
+            transform: rotate(45deg);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .collapsible.active .collapsible-content {
+            max-height: 3000px;
+        }
+
+        .collapsible-inner {
+            padding: 0 25px 25px 25px;
+        }
+
+        /* FAQ Accordion */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 20px 25px;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding: 0 25px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 800px;
+            padding: 0 25px 20px 25px;
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .faq-answer a {
+            color: var(--accent);
+        }
+
+        .faq-answer ul {
+            margin: 10px 0 10px 20px;
+            color: var(--text-secondary);
+        }
+
+        .faq-answer code {
+            background: var(--bg-tertiary);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        /* Lightning Button */
+        .lightning-btn {
+            background: linear-gradient(135deg, #a855f7 0%, #d946ef 100%);
+            color: white !important;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+            border: none;
+        }
+
+        .lightning-btn:hover {
+            background: linear-gradient(135deg, #9333ea 0%, #c026d3 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.6);
+        }
+
+        .lightning-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .step {
+                padding-left: 30px;
+            }
+
+            .step::before {
+                left: 30px;
+                position: static;
+                margin-bottom: 15px;
+            }
+
+            .faq-question {
+                font-size: 1rem;
+                padding: 15px 20px;
+            }
+
+            .client-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .relay-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .wallet-table {
+                font-size: 0.85rem;
+            }
+
+            .wallet-table th,
+            .wallet-table td {
+                padding: 10px;
+            }
+
+            /* Mobile menu */
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                top: 71px;
+                left: 0;
+                right: 0;
+                background: var(--bg-secondary);
+                border-bottom: 1px solid var(--border);
+                padding: 20px;
+                gap: 5px;
+                z-index: 99;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu a {
+                padding: 12px 16px;
+                border-radius: 8px;
+                width: 100%;
+            }
+
+            .header-content {
+                position: relative;
+            }
+        }
+    </style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GVSNL2MBQ9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GVSNL2MBQ9');
+</script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Nostr para Neófitos</a>
+                
+                <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">
+                    ☰
+                </button>
+
+                <nav class="nav-menu" id="navMenu">
+                    <a href="#que-es">¿Qué es?</a>
+                    <a href="#conceptos">Conceptos</a>
+                    <a href="#empezar">Empezar</a>
+                    <a href="#clientes">Clientes</a>
+                    <a href="#wallets">Wallets</a>
+                    <a href="#relays">Relays</a>
+                    <a href="#seguridad">Seguridad</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#recursos">Recursos</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Tu guía para entender Nostr</h1>
+                <p class="subtitle">El protocolo descentralizado que devuelve el control de tus redes sociales a tus manos. Sin censura, sin algoritmos ocultos, sin intermediarios.</p>
+                <div class="cta-buttons">
+                    <a href="#empezar" class="btn btn-primary">Empezar ahora (5 min)</a>
+                    <a href="#que-es" class="btn btn-secondary">¿Qué es Nostr?</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Qué es Nostr -->
+        <section id="que-es">
+            <div class="container">
+                <h2>¿Qué es Nostr?</h2>
+                <p style="text-align: center; font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 40px;">
+                    <strong style="color: var(--text-primary);">Notes and Other Stuff Transmitted by Relays</strong> — Un protocolo abierto para redes sociales descentralizadas y resistentes a la censura.
+                </p>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-icon">🔓</div>
+                        <h3>Sin dueños</h3>
+                        <p>No hay empresa detrás. Es un protocolo abierto que nadie controla. Piensa en Nostr como el email: no hay un "CEO del email".</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🛡️</div>
+                        <h3>Resistente a censura</h3>
+                        <p>Tu cuenta no puede ser baneada o eliminada. Tus claves, tus datos. Nadie puede quitarte tu identidad digital.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🔑</div>
+                        <h3>Tú controlas</h3>
+                        <p>Tus seguidores y contenido te siguen a cualquier aplicación. No estás atrapado en una plataforma.</p>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 50px;">
+                    <strong>Analogía simple:</strong> Si Twitter es como alquilar un apartamento (el casero puede echarte), Nostr es como vivir en una autocaravana. Puedes aparcar en diferentes campings (clientes/apps) pero tu hogar va contigo siempre.
+                </div>
+            </div>
+        </section>
+
+        <!-- Conceptos clave -->
+        <section id="conceptos">
+            <div class="container">
+                <h2>🔑 Conceptos clave</h2>
+                <p style="text-align: center; font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 50px;">
+                    Tu identidad en Nostr se basa en criptografía. Necesitas entender dos tipos de claves:
+                </p>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <h3 style="margin-top: 0;">Clave pública (npub...)</h3>
+                        <div class="key-example">
+                            <span class="key-label">Ejemplo:</span>
+                            npub1a2b3c4d5e6f7g8h9i0j...
+                        </div>
+                        <p style="margin-top: 15px;">Tu "usuario" o "nombre de cuenta". Es como tu dirección de email. <strong>Compártela libremente</strong> para que otros te encuentren.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-top: 0;">Clave privada (nsec...)</h3>
+                        <div class="key-example">
+                            <span class="key-label">Ejemplo:</span>
+                            nsec1x9y8z7w6v5u4t3s2r1q...
+                        </div>
+                        <p style="margin-top: 15px;">Tu "contraseña maestra". Es como la llave de tu casa. <strong>NUNCA la compartas con nadie.</strong></p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ CRÍTICO:</strong> Si pierdes tu clave privada (nsec), pierdes tu cuenta para siempre. No hay botón de "recuperar contraseña". No hay empresa de soporte. No hay vuelta atrás. <strong>Guárdala en un lugar seguro</strong> (gestor de contraseñas, papel, metal).
+                </div>
+
+                <div class="info-box">
+                    <strong>Nota técnica:</strong> Tu nsec puede presentarse en formato hexadecimal o bech32 (el que empieza con "nsec1..."). Ambas representan la misma clave, solo cambia la codificación.
+                </div>
+            </div>
+        </section>
+
+        <!-- Empezar -->
+        <section id="empezar" style="background: var(--bg-secondary);">
+            <div class="container">
+                <h2>🚀 Empezar en 5 minutos</h2>
+                
+                <div class="steps">
+                    <div class="step">
+                        <h3>Elige un cliente</h3>
+                        <p>Los "clientes" son las aplicaciones que usas para conectarte a Nostr. Es como elegir entre Gmail, Outlook o Thunderbird para leer tu email. Tu cuenta funciona en todos.</p>
+                        
+                        <div style="margin-top: 20px;">
+                            <p style="font-weight: 600; margin-bottom: 15px;">Recomendaciones rápidas:</p>
+                            <ul style="color: var(--text-secondary); margin-left: 20px;">
+                                <li><strong>iOS:</strong> <a href="https://damus.io/" target="_blank" style="color: var(--accent);">Damus</a> o <a href="https://primal.net/" target="_blank" style="color: var(--accent);">Primal</a></li>
+                                <li><strong>Android:</strong> <a href="https://github.com/vitorpamplona/amethyst" target="_blank" style="color: var(--accent);">Amethyst</a> o <a href="https://primal.net/" target="_blank" style="color: var(--accent);">Primal</a></li>
+                                <li><strong>Web:</strong> <a href="https://primal.net/" target="_blank" style="color: var(--accent);">primal.net</a> o <a href="https://snort.social/" target="_blank" style="color: var(--accent);">snort.social</a></li>
+                            </ul>
+                        </div>
+
+                        <p style="margin-top: 15px; color: var(--text-secondary);">Ver lista completa en la sección <a href="#clientes" style="color: var(--accent);">Clientes</a> más abajo.</p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Crear tu cuenta</h3>
+                        <ol style="margin-left: 20px; color: var(--text-secondary);">
+                            <li>Abre el cliente que elegiste</li>
+                            <li>Selecciona <strong>"Crear cuenta"</strong> o <strong>"Generate keys"</strong></li>
+                            <li>El cliente generará automáticamente tu par de claves (pública y privada)</li>
+                            <li><strong style="color: var(--danger);">GUARDA TU CLAVE PRIVADA (nsec) EN UN LUGAR SEGURO 🔐</strong></li>
+                        </ol>
+                        <div class="info-box" style="margin-top: 20px;">
+                            <strong>Tip:</strong> Algunos clientes te darán también una "frase semilla" de 12-24 palabras. Es otra forma de representar tu clave privada. Guárdala igual de seguro.
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h3>Configura tu perfil</h3>
+                        <ol style="margin-left: 20px; color: var(--text-secondary);">
+                            <li>Añade tu nombre, foto de perfil y biografía</li>
+                            <li>Tu perfil se propaga automáticamente por los relays</li>
+                            <li><strong>Opcional pero recomendado:</strong> Vincula tu wallet de Lightning para recibir zaps (propinas en Bitcoin)</li>
+                        </ol>
+                    </div>
+
+                    <div class="step">
+                        <h3>¡Ya estás dentro!</h3>
+                        <p><strong>Primeros pasos recomendados:</strong></p>
+                        <ul style="margin-left: 20px; color: var(--text-secondary); margin-top: 10px;">
+                            <li>Busca y sigue algunas cuentas interesantes (más abajo tienes sugerencias)</li>
+                            <li>Publica tu primer "note" presentándote con <code style="background: var(--bg-tertiary); padding: 2px 6px; border-radius: 3px;">#introductions</code> o <code style="background: var(--bg-tertiary); padding: 2px 6px; border-radius: 3px;">#plebchain</code></li>
+                            <li>Explora diferentes clientes y encuentra tu favorito</li>
+                            <li>Configura tu wallet para recibir zaps (ver sección <a href="#wallets" style="color: var(--accent);">Wallets</a>)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Clientes (REORGANIZADO Y EXPANDIDO) -->
+        <section id="clientes">
+            <div class="container">
+                <h2>📱 Clientes: Tu puerta a Nostr</h2>
+                <p style="text-align: center; font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 40px;">
+                    Los clientes son apps que se conectan a Nostr. Prueba varios — tu cuenta funciona en todos. Encuentra el que mejor se adapte a ti.
+                </p>
+
+                <div class="tabs">
+                    <button class="tab active" onclick="openTab(event, 'tab-movil-new')">📱 Móvil</button>
+                    <button class="tab" onclick="openTab(event, 'tab-web-new')">🌐 Web</button>
+                    <button class="tab" onclick="openTab(event, 'tab-escritorio-new')">💻 Escritorio</button>
+                    <button class="tab" onclick="openTab(event, 'tab-especial')">⚡ Casos especiales</button>
+                </div>
+
+                <div id="tab-movil-new" class="tab-content active">
+                    <h3 style="margin-top: 0;">Android</h3>
+                    <div class="client-list">
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Amethyst 🏆</h4>
+                                <p>El flagship de Android. Completo, rápido, y soporta todos los NIPs recientes. Altamente recomendado.</p>
+                            </div>
+                            <a href="https://github.com/vitorpamplona/amethyst" target="_blank" class="client-link">Descargar →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Primal</h4>
+                                <p>Interfaz familiar tipo Twitter. Ideal para principiantes. Disponible también en web e iOS.</p>
+                            </div>
+                            <a href="https://primal.net/" target="_blank" class="client-link">Descargar →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Nostros</h4>
+                                <p>UI limpia y soporta funciones avanzadas. Desarrollado por KoalaSat.</p>
+                            </div>
+                            <a href="https://github.com/KoalaSat/nostros" target="_blank" class="client-link">Descargar →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Spring</h4>
+                                <p>Navegador de nApps (aplicaciones Nostr). Accede a múltiples apps desde un solo lugar.</p>
+                            </div>
+                            <a href="https://spring.site/" target="_blank" class="client-link">Descargar →</a>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 40px;">iOS</h3>
+                    <div class="client-list">
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Damus 🏆</h4>
+                                <p>El cliente insignia de iOS. Diseño pulido y experiencia fluida.</p>
+                            </div>
+                            <a href="https://damus.io/" target="_blank" class="client-link">Descargar →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Primal</h4>
+                                <p>Rápido, limpio, y fácil de usar. Perfecto para empezar.</p>
+                            </div>
+                            <a href="https://primal.net/" target="_blank" class="client-link">Descargar →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Nostur</h4>
+                                <p>Gestiona múltiples perfiles. Útil para separar identidades.</p>
+                            </div>
+                            <a href="https://nostur.com/" target="_blank" class="client-link">Descargar →</a>
+                        </div>
+                    </div>
+
+                    <div class="warning-box" style="margin-top: 30px;">
+                        <strong>Nota iOS:</strong> Apple restringe los zaps en iOS. Usa <a href="https://zap.army/" target="_blank" style="color: var(--accent);">zap.army</a> como workaround para activarlos en Damus.
+                    </div>
+                </div>
+
+                <div id="tab-web-new" class="tab-content">
+                    <div class="client-list">
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>primal.net</h4>
+                                <p>La opción más fácil para empezar. Rápida y pulida.</p>
+                            </div>
+                            <a href="https://primal.net/" target="_blank" class="client-link">Abrir →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>snort.social</h4>
+                                <p>Diseño minimalista y limpio. Ligero y eficiente.</p>
+                            </div>
+                            <a href="https://snort.social/" target="_blank" class="client-link">Abrir →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>iris.to</h4>
+                                <p>Notificaciones detalladas y buena gestión de relays.</p>
+                            </div>
+                            <a href="https://iris.to/" target="_blank" class="client-link">Abrir →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>coracle.social</h4>
+                                <p>Mejora en carga multimedia. Buena para contenido visual.</p>
+                            </div>
+                            <a href="https://coracle.social/" target="_blank" class="client-link">Abrir →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>nostrudel.ninja</h4>
+                                <p>Cliente potente para usuarios avanzados con muchas opciones.</p>
+                            </div>
+                            <a href="https://nostrudel.ninja/" target="_blank" class="client-link">Abrir →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-escritorio-new" class="tab-content">
+                    <div class="client-list">
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Gossip (Linux/Windows)</h4>
+                                <p>Cliente enfocado en privacidad y modelo de relays específicos por usuario. Para usuarios avanzados.</p>
+                            </div>
+                            <a href="https://github.com/mikedilger/gossip" target="_blank" class="client-link">Descargar →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Lume (Mac/Windows/Linux)</h4>
+                                <p>Cliente de escritorio multiplataforma con diseño moderno.</p>
+                            </div>
+                            <a href="https://lume.nu/" target="_blank" class="client-link">Descargar →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-especial" class="tab-content">
+                    <h3 style="margin-top: 0;">🛒 Marketplaces</h3>
+                    <div class="client-list">
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Mostro</h4>
+                                <p>Intercambio P2P de Bitcoin sin KYC directamente sobre Nostr.</p>
+                            </div>
+                            <a href="https://mostro.network/" target="_blank" class="client-link">Ver más →</a>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 30px;">📺 Streaming & Multimedia</h3>
+                    <div class="client-list">
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Zap.stream</h4>
+                                <p>Streaming en vivo con monetización directa vía zaps.</p>
+                            </div>
+                            <a href="https://zap.stream/" target="_blank" class="client-link">Ver más →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Wavlake</h4>
+                                <p>Plataforma de música "valor por valor". Artistas reciben zaps directos.</p>
+                            </div>
+                            <a href="https://wavlake.com/" target="_blank" class="client-link">Ver más →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Fountain</h4>
+                                <p>Podcasts con monetización Lightning. Escucha y gana sats.</p>
+                            </div>
+                            <a href="https://fountain.fm/" target="_blank" class="client-link">Ver más →</a>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 30px;">✍️ Blogs & Contenido largo</h3>
+                    <div class="client-list">
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Habla.news</h4>
+                                <p>Para artículos largos y blogs (NIP-23). Como Medium pero en Nostr.</p>
+                            </div>
+                            <a href="https://habla.news/" target="_blank" class="client-link">Ver más →</a>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 30px;">🔗 Utilidades</h3>
+                    <div class="client-list">
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Nostree.me</h4>
+                                <p>Linktree descentralizado. Tu página de enlaces en Nostr.</p>
+                            </div>
+                            <a href="https://nostree.me/" target="_blank" class="client-link">Ver más →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>Nostrcheck.me</h4>
+                                <p>Hosting de imágenes y servicios de identidad (NIP-05).</p>
+                            </div>
+                            <a href="https://nostrcheck.me/" target="_blank" class="client-link">Ver más →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 40px;">
+                    <strong>Recuerda:</strong> Tu cuenta funciona en TODOS los clientes. Prueba varios y quédate con el que más te guste. Puedes cambiar cuando quieras sin perder seguidores ni contenido.
+                </div>
+            </div>
+        </section>
+
+        <!-- Wallets y Zaps (NUEVA SECCIÓN) -->
+        <section id="wallets" style="background: var(--bg-secondary);">
+            <div class="container">
+                <h2>⚡ Wallets y Zaps</h2>
+                <p style="text-align: center; font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 40px;">
+                    Los <strong>zaps</strong> son propinas en Bitcoin Lightning. Son instantáneos, casi sin comisiones, y reemplazan al "like" tradicional con valor real.
+                </p>
+
+                <div class="info-box">
+                    <strong>¿Por qué importan?</strong> Los zaps permiten monetizar contenido directamente. Sin intermediarios, sin plataformas que se quedan el 30%. Del creador al creador, en segundos.
+                </div>
+
+                <h3 style="text-align: center; margin-top: 60px;">Wallets recomendadas</h3>
+                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 30px;">
+                    Existen dos tipos: <span style="color: var(--warning);">custodiales</span> (fáciles pero la wallet guarda tus fondos) y <span style="color: var(--success);">no-custodiales</span> (tú controlas todo).
+                </p>
+
+                <table class="wallet-table">
+                    <thead>
+                        <tr>
+                            <th>Wallet</th>
+                            <th>Tipo</th>
+                            <th>Plataforma</th>
+                            <th>Fees</th>
+                            <th>Notas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="wallet-name">Wallet of Satoshi</div>
+                                <span class="wallet-type type-custodial">Custodial</span>
+                            </td>
+                            <td>Móvil</td>
+                            <td>iOS/Android</td>
+                            <td style="color: var(--success);">0% zaps internos</td>
+                            <td>La más fácil para empezar. Muy popular.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="wallet-name">Alby</div>
+                                <span class="wallet-type type-custodial">Custodial</span>
+                            </td>
+                            <td>Extensión</td>
+                            <td>Navegador</td>
+                            <td>Bajo</td>
+                            <td>Ideal para web. También gestiona nsec.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="wallet-name">Phoenix</div>
+                                <span class="wallet-type type-noncustodial">No-custodial</span>
+                            </td>
+                            <td>Móvil</td>
+                            <td>iOS/Android</td>
+                            <td style="color: var(--warning);">~4 sats/zap</td>
+                            <td>Autocustodia real. Gestión de canales automática.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="wallet-name">Zeus</div>
+                                <span class="wallet-type type-noncustodial">No-custodial</span>
+                            </td>
+                            <td>Móvil</td>
+                            <td>iOS/Android</td>
+                            <td>Variable</td>
+                            <td>Completa pero más técnica. Para avanzados.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="wallet-name">Minibits</div>
+                                <span class="wallet-type type-noncustodial">No-custodial</span>
+                            </td>
+                            <td>Móvil</td>
+                            <td>Android</td>
+                            <td>Muy bajo</td>
+                            <td>Basada en Cashu (eCash). Convierte zaps automáticamente.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="wallet-name">Lawallet.ar</div>
+                                <span class="wallet-type type-custodial">Custodial</span>
+                            </td>
+                            <td>Web/Móvil</td>
+                            <td>Multi</td>
+                            <td>Muy bajo</td>
+                            <td>Regional (Argentina). Lightning Address por 21 sats.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="wallet-name">Blink</div>
+                                <span class="wallet-type type-noncustodial">No-custodial</span>
+                            </td>
+                            <td>Móvil</td>
+                            <td>iOS/Android</td>
+                            <td>Bajo</td>
+                            <td>Estable y confiable para transacciones diarias.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="success-box" style="margin-top: 30px;">
+                    <strong>Ruta recomendada:</strong> Empieza con Wallet of Satoshi (0 complicaciones) → cuando te sientas cómodo, migra a Phoenix para autocustodia real.
+                </div>
+
+                <h3 style="margin-top: 60px;">Activar zaps en tu perfil</h3>
+                <div class="steps">
+                    <div class="step">
+                        <h3>Obtén una Lightning Address</h3>
+                        <p>Al instalar tu wallet, automáticamente te asigna una <strong>Lightning Address</strong> (algo como: nombre@wallet.com). Es como un alias para recibir pagos.</p>
+                        <div class="key-example" style="margin-top: 15px;">
+                            <span class="key-label">Ejemplo:</span>
+                            tunombre@walletofsatoshi.com
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h3>Añádela a tu perfil Nostr</h3>
+                        <ol style="margin-left: 20px; color: var(--text-secondary);">
+                            <li>En tu cliente, ve a <strong>Settings → Edit Profile</strong></li>
+                            <li>Busca el campo <strong>"Lightning Address"</strong> o <strong>"Zaps"</strong></li>
+                            <li>Pega tu Lightning Address</li>
+                            <li>Guarda cambios</li>
+                        </ol>
+                        <p style="margin-top: 15px; color: var(--text-secondary);">¡Listo! Ahora verás un icono de rayo (⚡) en tus posts y otros podrán enviarte zaps.</p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Enviar tu primer zap</h3>
+                        <p>Haz clic en el ⚡ de cualquier post, elige la cantidad (21, 100, 1000 sats...), y confirma. Es instantáneo.</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 60px;">NWC: Zaps automáticos</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    <strong>Nostr Wallet Connect (NIP-47)</strong> permite autorizar a tu cliente Nostr para enviar zaps sin abrir tu wallet cada vez. Es como una conexión permanente.
+                </p>
+
+                <div class="client-list">
+                    <div class="client-item">
+                        <div class="client-info">
+                            <h4>Cómo configurar NWC</h4>
+                            <p>1. En tu wallet (Alby, Phoenix, etc.), busca "Nostr Wallet Connect" o "NWC"<br>
+                            2. Genera una conexión y copia el código<br>
+                            3. En tu cliente Nostr, pega el código en Settings → Wallet<br>
+                            4. ¡Ahora los zaps se envían automáticamente!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 30px;">
+                    <strong>Ventaja clave:</strong> Con NWC, zapear es tan fácil como dar like. Un clic y listo. Sin abrir wallets, sin confirmar transacciones manualmente.
+                </div>
+            </div>
+        </section>
+
+        <!-- Relays (EXPANDIDO) -->
+        <section id="relays">
+            <div class="container">
+                <h2>📡 Relays: El corazón de Nostr</h2>
+                <p style="text-align: center; font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 40px;">
+                    Los relays son servidores que guardan y transmiten tus notas. Tu cliente es solo la interfaz. Conéctate a <strong>5-10 relays</strong> para mejor conectividad.
+                </p>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-icon">📤</div>
+                        <h3 style="margin-top: 0;">Publicas</h3>
+                        <p>Tu cliente envía tu nota a todos los relays configurados.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🔄</div>
+                        <h3 style="margin-top: 0;">Se replican</h3>
+                        <p>Los relays guardan tu nota y la comparten con quien se conecte.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">📥</div>
+                        <h3 style="margin-top: 0;">Otros leen</h3>
+                        <p>Tus seguidores ven tu nota consultando relays compartidos.</p>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 40px;">
+                    <strong>Clave:</strong> Para que alguien vea tus notas, ambos deben compartir <strong>al menos 1 relay en común</strong>. Usa varios relays para maximizar alcance.
+                </div>
+
+                <h3 style="text-align: center; margin-top: 60px;">Relays públicos gratuitos</h3>
+                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 30px;">
+                    Estos vienen preconfigurados en la mayoría de clientes. Son un buen punto de partida.
+                </p>
+
+                <div style="display: grid; gap: 15px;">
+                    <div class="relay-item">
+                        <div class="relay-info">
+                            <h4>relay.damus.io</h4>
+                            <p>Uno de los más grandes y estables. Muy usado en la comunidad.</p>
+                            <code class="relay-url">wss://relay.damus.io</code>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="relay-badge badge-free">Gratis</span>
+                            <button onclick="copyRelay('wss://relay.damus.io')" class="copy-btn">📋 Copiar</button>
+                        </div>
+                    </div>
+
+                    <div class="relay-item">
+                        <div class="relay-info">
+                            <h4>relay.primal.net</h4>
+                            <p>Optimizado para Primal. Rápido y confiable.</p>
+                            <code class="relay-url">wss://relay.primal.net</code>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="relay-badge badge-free">Gratis</span>
+                            <button onclick="copyRelay('wss://relay.primal.net')" class="copy-btn">📋 Copiar</button>
+                        </div>
+                    </div>
+
+                    <div class="relay-item">
+                        <div class="relay-info">
+                            <h4>nos.lol</h4>
+                            <p>Relay comunitario muy popular. Alta disponibilidad.</p>
+                            <code class="relay-url">wss://nos.lol</code>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="relay-badge badge-free">Gratis</span>
+                            <button onclick="copyRelay('wss://nos.lol')" class="copy-btn">📋 Copiar</button>
+                        </div>
+                    </div>
+
+                    <div class="relay-item">
+                        <div class="relay-info">
+                            <h4>relay.nostr.band</h4>
+                            <p>Con funciones de búsqueda avanzadas.</p>
+                            <code class="relay-url">wss://relay.nostr.band</code>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="relay-badge badge-free">Gratis</span>
+                            <button onclick="copyRelay('wss://relay.nostr.band')" class="copy-btn">📋 Copiar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="text-align: center; margin-top: 60px;">Relays de pago (anti-spam)</h3>
+                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 30px;">
+                    Cobran una pequeña admisión única. Resultado: <strong>99.99% libre de spam</strong>.
+                </p>
+
+                <div style="display: grid; gap: 15px;">
+                    <div class="relay-item">
+                        <div class="relay-info">
+                            <h4>eden.nostr.land</h4>
+                            <p>Relay premium con moderación. Admisión: ~5000 sats (pago único). Desarrollado por Cameri.</p>
+                            <code class="relay-url">wss://eden.nostr.land</code>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="relay-badge badge-paid">Pago</span>
+                            <button onclick="copyRelay('wss://eden.nostr.land')" class="copy-btn">📋 Copiar</button>
+                        </div>
+                    </div>
+
+                    <div class="relay-item">
+                        <div class="relay-info">
+                            <h4>nostr.wine</h4>
+                            <p>Relay de pago altamente recomendado. Calidad premium, sin spam.</p>
+                            <code class="relay-url">wss://nostr.wine</code>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="relay-badge badge-paid">Pago</span>
+                            <button onclick="copyRelay('wss://nostr.wine')" class="copy-btn">📋 Copiar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="text-align: center; margin-top: 60px;">Relays especializados</h3>
+                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 30px;">
+                    Filtrados por idioma o tema específico.
+                </p>
+
+                <div style="display: grid; gap: 15px;">
+                    <div class="relay-item">
+                        <div class="relay-info">
+                            <h4>Español / Castellano</h4>
+                            <p>Relay filtrado para contenido en español.</p>
+                            <code class="relay-url">wss://lang.relays.land/es</code>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="relay-badge badge-free">Gratis</span>
+                            <button onclick="copyRelay('wss://lang.relays.land/es')" class="copy-btn">📋 Copiar</button>
+                        </div>
+                    </div>
+
+                    <div class="relay-item">
+                        <div class="relay-info">
+                            <h4>Relays temáticos</h4>
+                            <p>También existen: /left, /whales, /uncommon (topics específicos)</p>
+                            <code class="relay-url">wss://topic.relays.land/[tema]</code>
+                        </div>
+                        <span class="relay-badge badge-free">Gratis</span>
+                    </div>
+                </div>
+
+                <div class="warning-box" style="margin-top: 40px;">
+                    <strong>Ventaja anti-censura:</strong> Si un relay te elimina o se cae, tus notas persisten en los otros relays. Es descentralización real.
+                </div>
+
+                <div class="info-box" style="margin-top: 20px;">
+                    <strong>Modelo Gossip:</strong> Los clientes avanzados como Gossip aprenden automáticamente qué relays usa cada persona que sigues, optimizando la conectividad.
+                </div>
+            </div>
+        </section>
+
+        <!-- Seguridad (EXPANDIDO) -->
+        <section id="seguridad" style="background: var(--bg-secondary);">
+            <div class="container">
+                <h2>🛡️ Seguridad: Protege tu nsec</h2>
+                
+                <div class="warning-box">
+                    <strong>Regla de oro:</strong> NUNCA pegues tu nsec directamente en sitios web o clientes no verificados. Usa extensiones de firma o apps dedicadas.
+                </div>
+
+                <div class="card-grid" style="margin-top: 40px;">
+                    <div class="card">
+                        <div class="card-icon">📝</div>
+                        <h3>Guárdala offline</h3>
+                        <p>Usa gestores de contraseñas como <strong>Bitwarden</strong> o <strong>KeePass</strong>. Escríbela en papel. Mejor aún: <strong>grábala en acero</strong> para máxima durabilidad.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🎣</div>
+                        <h3>Cuidado con los scams</h3>
+                        <p>Solo usa clientes conocidos con buena reputación. Verifica siempre URLs. Nunca compartas tu nsec por DM o en público.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🔌</div>
+                        <h3>Usa extensiones/apps de firma</h3>
+                        <p>Custodian tu nsec y firman eventos por ti sin exponerla. Son como un hardware wallet pero para Nostr.</p>
+                    </div>
+                </div>
+
+                <h3 style="text-align: center; margin-top: 60px;">Herramientas de firma recomendadas</h3>
+                
+                <div class="client-list" style="margin-top: 30px;">
+                    <div class="client-item">
+                        <div class="client-info">
+                            <h4>Amber (Android)</h4>
+                            <p>App dedicada que guarda tu nsec y firma eventos por ti. Configuración fácil.</p>
+                        </div>
+                        <a href="#amber-tutorial" class="client-link">Ver tutorial →</a>
+                    </div>
+                    <div class="client-item">
+                        <div class="client-info">
+                            <h4>nos2x (Chrome/Brave/Edge)</h4>
+                            <p>Extensión ligera y segura. La más usada en navegadores.</p>
+                        </div>
+                        <a href="https://github.com/fiatjaf/nos2x" target="_blank" class="client-link">Instalar →</a>
+                    </div>
+                    <div class="client-item">
+                        <div class="client-info">
+                            <h4>nos2x-fox (Firefox)</h4>
+                            <p>Versión de nos2x para Firefox.</p>
+                        </div>
+                        <a href="https://github.com/diegogurpegui/nos2x-fox" target="_blank" class="client-link">Instalar →</a>
+                    </div>
+                    <div class="client-item">
+                        <div class="client-info">
+                            <h4>Alby (Multi-navegador)</h4>
+                            <p>También sirve para gestionar pagos Lightning. 2 en 1.</p>
+                        </div>
+                        <a href="https://getalby.com/" target="_blank" class="client-link">Instalar →</a>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 40px;">
+                    <strong>¿Cómo funcionan?</strong> Estas herramientas guardan tu nsec localmente. Cuando una app necesita firmar algo (publicar, dar like, etc.), le piden permiso a la extensión/app en lugar de usar tu nsec directamente. Tu clave privada <strong>nunca sale</strong> de la herramienta de firma.
+                </div>
+
+                <h3 style="margin-top: 60px;">Generación avanzada de claves</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    Para máxima seguridad, genera tus claves <strong>airgapped</strong> (sin conexión a internet).
+                </p>
+
+                <div class="client-list">
+                    <div class="client-item">
+                        <div class="client-info">
+                            <h4>Rana</h4>
+                            <p>Generador de claves offline. Permite crear "vanity keys" (npub personalizadas con texto específico). Indica dificultad PoW.</p>
+                        </div>
+                        <a href="https://github.com/grunch/rana" target="_blank" class="client-link">Ver repo →</a>
+                    </div>
+                    <div class="client-item">
+                        <div class="client-info">
+                            <h4>Nostril</h4>
+                            <p>Herramienta CLI para generar claves de forma segura.</p>
+                        </div>
+                        <a href="https://github.com/jb55/nostril" target="_blank" class="client-link">Ver repo →</a>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 30px;">
+                    <strong>Vanity keys:</strong> Son claves públicas personalizadas (ej: npub1bitcoin...). Requieren minado PoW para encontrar una con el texto deseado. Más caracteres = más tiempo de cómputo.
+                </div>
+
+                <div class="collapsible" style="margin-top: 40px;">
+                    <button class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <span>📖 Tutorial: Amber + Primal (Android)</span>
+                        <span class="collapsible-icon">+</span>
+                    </button>
+                    <div class="collapsible-content">
+                        <div class="collapsible-inner" id="amber-tutorial">
+                            <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                                Amber es como un hardware wallet pero para Nostr. Guarda tu nsec de forma segura y firma por ti sin exponerla nunca.
+                            </p>
+
+                            <div class="steps">
+                                <div class="step">
+                                    <h3>Instalar Amber</h3>
+                                    <p><strong>Opción A (recomendada):</strong> Play Store → busca "Amber Nostr"</p>
+                                    <p><strong>Opción B:</strong> Si no aparece en Play Store → instala F-Droid o Zapstore → busca Amber</p>
+                                </div>
+
+                                <div class="step">
+                                    <h3>Configurar Amber (guardar tu clave)</h3>
+                                    <ol style="margin-left: 20px; color: var(--text-secondary);">
+                                        <li>Abre Amber</li>
+                                        <li>Elige una opción:
+                                            <ul style="margin-top: 10px;">
+                                                <li><strong>Create new account:</strong> Amber genera un nsec nuevo automáticamente</li>
+                                                <li><strong>Import:</strong> Pega tu nsec existente (o importa desde seed/backup)</li>
+                                            </ul>
+                                        </li>
+                                        <li>Activa el bloqueo con PIN o biometría si Amber lo ofrece (recomendado)</li>
+                                    </ol>
+                                </div>
+
+                                <div class="step">
+                                    <h3>Instalar Primal</h3>
+                                    <p>Instala Primal desde Play Store (cliente Nostr)</p>
+                                </div>
+
+                                <div class="step">
+                                    <h3>Login en Primal usando Amber</h3>
+                                    <ol style="margin-left: 20px; color: var(--text-secondary);">
+                                        <li>Abre Primal</li>
+                                        <li>Ve a <strong>Login / Sign In</strong></li>
+                                        <li>Elige <strong>"Login with Amber"</strong> o <strong>"Use Signer"</strong></li>
+                                        <li>Aparecerá una ventana de Amber pidiendo permiso → <strong>Allow → Connect</strong></li>
+                                        <li>Selecciona cuánto tiempo quieres que dure el login (recomendado: 30 días)</li>
+                                        <li><strong>Accept</strong></li>
+                                        <li>¡Ya estás logueado!</li>
+                                    </ol>
+                                </div>
+
+                                <div class="step">
+                                    <h3>Comprobación</h3>
+                                    <p>Intenta dar like a un post o publicar. Si no concediste todos los permisos, Amber saltará pidiendo firmar la acción. <strong>Esto es normal y seguro</strong> — significa que Amber está protegiendo tu nsec.</p>
+                                </div>
+                            </div>
+
+                            <div class="warning-box" style="margin-top: 30px;">
+                                <strong>Importante:</strong> Con Amber configurado, NUNCA pegues tu nsec en Primal ni en ningún otro cliente. Usa siempre "Login with Amber" o "Remote Signer (NIP-46)".
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NIP-05 -->
+        <section id="nip05">
+            <div class="container">
+                <h2>✓ NIP-05: Verificación con dominio</h2>
+                <p style="text-align: center; font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 40px;">
+                    NIP-05 asocia tu identidad Nostr con un dominio o dirección tipo email. Es <strong>cosmético</strong> — no hace tu cuenta "más oficial", pero sí más memorable.
+                </p>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <h3 style="margin-top: 0;">Sin NIP-05</h3>
+                        <div class="key-example">
+                            npub1a2b3c4d5e6f7g8h9i0j...
+                        </div>
+                        <p style="margin-top: 15px; color: var(--text-secondary);">Difícil de recordar y compartir</p>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-top: 0;">Con NIP-05 ✓</h3>
+                        <div class="key-example">
+                            nombre@tudominio.com
+                        </div>
+                        <p style="margin-top: 15px; color: var(--text-secondary);">Fácil de recordar y verificar</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 60px;">¿Cómo conseguir NIP-05?</h3>
+
+                <div class="tabs" style="margin-top: 30px;">
+                    <button class="tab active" onclick="openTab(event, 'nip05-gratis')">🆓 Servicios gratuitos</button>
+                    <button class="tab" onclick="openTab(event, 'nip05-propio')">🏠 Tu propio dominio</button>
+                </div>
+
+                <div id="nip05-gratis" class="tab-content active">
+                    <div class="client-list">
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>zaps.lol</h4>
+                                <p>Gratis, algo como nombre@zaps.lol. Rápido y fácil.</p>
+                            </div>
+                            <a href="https://zaps.lol/" target="_blank" class="client-link">Obtener →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>nostr.directory</h4>
+                                <p>Vincula tu cuenta de Twitter con tu perfil Nostr.</p>
+                            </div>
+                            <a href="https://nostr.directory/" target="_blank" class="client-link">Obtener →</a>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-info">
+                                <h4>nostrcheck.me</h4>
+                                <p>Ofrece NIP-05 y servicios de identidad adicionales.</p>
+                            </div>
+                            <a href="https://nostrcheck.me/" target="_blank" class="client-link">Obtener →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="nip05-propio" class="tab-content">
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                        Si tienes un dominio (tunombre.com), puedes configurar tu propio NIP-05:
+                    </p>
+
+                    <div class="steps">
+                        <div class="step">
+                            <h3>Crea el archivo nostr.json</h3>
+                            <p>Contenido (reemplaza con tus datos):</p>
+<pre style="background: var(--bg-tertiary); padding: 15px; border-radius: 8px; overflow-x: auto; margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+{
+  "names": {
+    "tunombre": "tu_clave_publica_en_hex"
+  }
+}
+</pre>
+                        </div>
+
+                        <div class="step">
+                            <h3>Súbelo a tu servidor</h3>
+                            <p>Ubicación: <code style="background: var(--bg-tertiary); padding: 4px 8px; border-radius: 4px; font-family: monospace;">https://tudominio.com/.well-known/nostr.json</code></p>
+                        </div>
+
+                        <div class="step">
+                            <h3>Añádelo a tu perfil</h3>
+                            <p>En tu cliente Nostr, campo NIP-05: <code style="background: var(--bg-tertiary); padding: 4px 8px; border-radius: 4px; font-family: monospace;">tunombre@tudominio.com</code></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 40px;">
+                    <strong>Recuerda:</strong> NIP-05 NO es autenticación ni seguridad. Cualquiera puede configurar uno. Solo es una forma de hacer tu perfil más memorable y fácil de buscar.
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ (EXPANDIDO CON PROBLEMAS COMUNES) -->
+        <section id="faq" style="background: var(--bg-secondary);">
+            <div class="container">
+                <h2>❓ Preguntas frecuentes</h2>
+                
+                <div class="faq-container" style="margin-top: 40px;">
+                    <!-- Problemas comunes primero -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Mis zaps no funcionan / no llegan ¿Por qué?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p><strong>Posibles causas:</strong></p>
+                            <ul>
+                                <li><strong>Lightning Address incorrecta:</strong> Verifica que pegaste bien tu dirección en el perfil (sin espacios extra).</li>
+                                <li><strong>Wallet sin canales abiertos:</strong> Si usas Phoenix u otra wallet no-custodial, necesitas tener liquidez en canales Lightning. Recibe primero un pago para abrir canales.</li>
+                                <li><strong>Zap expirado:</strong> Las facturas Lightning tienen tiempo límite. Si tardas mucho en confirmar, el zap falla. Los sats NO salen de la wallet del emisor.</li>
+                                <li><strong>Relay no propaga el evento:</strong> Tu cliente puede no estar conectado al relay correcto. Añade más relays a tu configuración.</li>
+                            </ul>
+                            <p style="margin-top: 15px;"><strong>Solución rápida:</strong> Prueba con Wallet of Satoshi (custodial) primero. Es plug & play, sin gestión de canales.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>No veo las notas de alguien que sigo ¿Qué hago?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p><strong>Causa más común:</strong> No compartís ningún relay en común.</p>
+                            <p style="margin-top: 10px;"><strong>Solución:</strong></p>
+                            <ul>
+                                <li>Ve al perfil de esa persona en tu cliente</li>
+                                <li>Busca qué relays usa (algunos clientes muestran esto)</li>
+                                <li>Añade uno de sus relays a tu configuración</li>
+                                <li>Refresca el feed</li>
+                            </ul>
+                            <p style="margin-top: 15px;">Alternativamente, usa clientes con <strong>modelo Gossip</strong> que descubren automáticamente dónde publica cada persona.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Spam de bots (ReplyGuy) ¿Cómo lo elimino?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p><strong>Soluciones por orden de efectividad:</strong></p>
+                            <ul>
+                                <li><strong>Relays de pago:</strong> Conecta a Eden (wss://eden.nostr.land) o nostr.wine. Pago único de ~5000 sats = 99.99% menos spam.</li>
+                                <li><strong>Hidden words (Amethyst):</strong> Ve a Settings → Security Filters → añade palabras clave del spam. El cliente ocultará posts con esas palabras.</li>
+                                <li><strong>Reporta y bloquea:</strong> Usa la función "Report spam" en tu cliente. Los relays pueden eliminar esas cuentas.</li>
+                                <li><strong>Cambia de cliente:</strong> Algunos clientes tienen mejores filtros nativos anti-spam.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>En iOS los zaps están bloqueados ¿Cómo los activo?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Apple censura las funciones de zaps en apps de la App Store. <strong>Workaround:</strong></p>
+                            <ul>
+                                <li>Usa <a href="https://zap.army/" target="_blank" style="color: var(--accent);">zap.army</a> en el navegador de tu móvil</li>
+                                <li>Sigue las instrucciones para "desbloquear" zaps en Damus</li>
+                                <li>Es legal y seguro — solo esquiva las restricciones de Apple</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- FAQ originales -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Puedo cambiar mi clave privada (nsec)?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>No. Tu nsec está vinculada permanentemente a tu identidad. Si la pierdes, pierdes tu cuenta. Si quieres "cambiarla", tendrías que crear una cuenta nueva desde cero y empezar de nuevo.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Cómo recupero mi cuenta si pierdo mi nsec?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>No puedes. No hay "recuperar contraseña" en Nostr. Por eso es CRÍTICO guardar tu nsec de forma segura desde el primer momento. Usa un gestor de contraseñas, papel, o metal.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Es Nostr gratis?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Sí. Crear cuenta y usar Nostr es completamente gratis. Algunos relays privados pueden cobrar una pequeña cantidad para evitar spam, pero los relays públicos grandes son gratuitos.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Puedo usar Nostr sin Bitcoin?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Sí. Bitcoin/Lightning solo es necesario si quieres enviar/recibir zaps (propinas). Puedes usar Nostr perfectamente sin tocar nada de crypto.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Qué pasa si un relay se cae o me banea?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Nada grave. Como estás conectado a múltiples relays, tus mensajes siguen existiendo en los demás. Simplemente quita ese relay de tu configuración y añade otro. Tu cuenta NO depende de un solo relay.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Nostr tiene algoritmo como Twitter?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Depende del cliente. Algunos muestran todo en orden cronológico (sin algoritmo). Otros tienen opciones de "trending" o "popular". Pero TÚ decides — puedes cambiar de cliente si no te gusta cómo ordena el contenido.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Cómo busco a alguien en Nostr?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Necesitas su clave pública (npub) o su verificación NIP-05. Pégala en el buscador de tu cliente. También puedes:</p>
+                            <ul>
+                                <li>Buscar por hashtags (<code>#hispano</code>, <code>#castellano</code>)</li>
+                                <li>Usar <a href="https://nostr.directory/" target="_blank" style="color: var(--accent);">nostr.directory</a> que vincula cuentas de Twitter con Nostr</li>
+                                <li>Pedir recomendaciones en tus primeros posts</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Puedo borrar mis posts?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Puedes enviar un evento de "solicitud de borrado" (NIP-09) a los relays, pero no hay garantía de que todos la respeten. Algunos pueden mantener el contenido. Piensa dos veces antes de publicar algo comprometedor.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Nostr es anónimo?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Pseudo-anónimo. No necesitas dar email ni datos personales para crear cuenta. Pero tus posts son públicos y tu clave pública está vinculada a toda tu actividad. Si quieres más privacidad, considera usar Tor al conectarte a los relays.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Primeros pasos -->
+        <section id="primeros-pasos">
+            <div class="container">
+                <h2>🎯 Cuentas recomendadas</h2>
+                <p style="text-align: center; font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 40px;">
+                    Sigue a estas cuentas para empezar con buen contenido en español.
+                </p>
+
+                <div class="client-list" style="margin-top: 20px;">
+                    <div class="client-item">
+                        <div class="client-info">
+                            <h4>Lunaticoin</h4>
+                            <p>Divulgación Bitcoin y Nostr en español</p>
+                            <code style="font-size: 0.75rem; display: block; margin-top: 8px; color: var(--text-secondary);">npub1yn3hc8jmpj963h0zw49ullrrkkefn7qxf78mj29u7v2mn3yktuasx3mzt0</code>
+                        </div>
+                        <a href="https://njump.me/npub1yn3hc8jmpj963h0zw49ullrrkkefn7qxf78mj29u7v2mn3yktuasx3mzt0" target="_blank" class="client-link">Ver perfil →</a>
+                    </div>
+                    <div class="client-item">
+                        <div class="client-info">
+                            <h4>José Antonio Bravo</h4>
+                            <p>Contenido técnico sobre Bitcoin</p>
+                            <code style="font-size: 0.75rem; display: block; margin-top: 8px; color: var(--text-secondary);">npub1wm4ze7uv5h8hdq7k8jzs5nfdkus56w59p0qzzvq78wz0xcyst92set4s5a</code>
+                        </div>
+                        <a href="https://njump.me/npub1wm4ze7uv5h8hdq7k8jzs5nfdkus56w59p0qzzvq78wz0xcyst92set4s5a" target="_blank" class="client-link">Ver perfil →</a>
+                    </div>
+                    <div class="client-item">
+                        <div class="client-info">
+                            <h4>Arkad</h4>
+                            <p>Educación financiera y Bitcoin</p>
+                            <code style="font-size: 0.75rem; display: block; margin-top: 8px; color: var(--text-secondary);">npub12aqfngts2xc0z0n47lyfx03p8prhz4kqcel29mukgwydeuatawqqg5dvgy</code>
+                        </div>
+                        <a href="https://njump.me/npub12aqfngts2xc0z0n47lyfx03p8prhz4kqcel29mukgwydeuatawqqg5dvgy" target="_blank" class="client-link">Ver perfil →</a>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 40px;">
+                    <strong>Tip:</strong> Busca también los hashtags <code style="background: var(--bg-tertiary); padding: 2px 6px; border-radius: 3px;">#hispano</code> y <code style="background: var(--bg-tertiary); padding: 2px 6px; border-radius: 3px;">#castellano</code> para encontrar más contenido en español.
+                </div>
+            </div>
+        </section>
+
+        <!-- Avanzado (COLAPSABLE) -->
+        <section id="avanzado" style="background: var(--bg-secondary);">
+            <div class="container">
+                <h2>🔬 Nivel avanzado</h2>
+                <p style="text-align: center; font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 40px;">
+                    Para usuarios que quieren profundizar en aspectos técnicos del protocolo.
+                </p>
+
+                <div class="collapsible">
+                    <button class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <span>📚 NIPs (Nostr Implementation Possibilities)</span>
+                        <span class="collapsible-icon">+</span>
+                    </button>
+                    <div class="collapsible-content">
+                        <div class="collapsible-inner">
+                            <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                                Los NIPs son propuestas de implementación que extienden las funcionalidades de Nostr. Algunos críticos:
+                            </p>
+
+                            <div class="client-list">
+                                <div class="client-item">
+                                    <div class="client-info">
+                                        <h4>NIP-04 vs NIP-17 (Mensajería privada)</h4>
+                                        <p><strong>Evita NIP-04:</strong> Filtra metadatos (quién habla con quién). <strong>Usa NIP-17:</strong> Cifrado mejorado que protege metadata.</p>
+                                    </div>
+                                </div>
+                                <div class="client-item">
+                                    <div class="client-info">
+                                        <h4>NIP-29 (Grupos de chat)</h4>
+                                        <p>Grupos basados en relay con capacidad de moderación. Reemplazo del antiguo NIP-72.</p>
+                                    </div>
+                                </div>
+                                <div class="client-item">
+                                    <div class="client-info">
+                                        <h4>NIP-46 (Nostr Connect)</h4>
+                                        <p>Permite que una app firme eventos en nombre de otra sin compartir la nsec. Base de Amber y herramientas de firma.</p>
+                                    </div>
+                                </div>
+                                <div class="client-item">
+                                    <div class="client-info">
+                                        <h4>NIP-47 (Nostr Wallet Connect)</h4>
+                                        <p>Autoriza clientes a enviar pagos Lightning desde tu wallet sin abrirla manualmente. Zaps automáticos.</p>
+                                    </div>
+                                </div>
+                                <div class="client-item">
+                                    <div class="client-info">
+                                        <h4>NIP-65 (Relay List Metadata)</h4>
+                                        <p>Anuncia tu lista de relays preferidos para que otros clientes sepan dónde buscar tus notas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="collapsible">
+                    <button class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <span>🔄 Bouncers y optimización</span>
+                        <span class="collapsible-icon">+</span>
+                    </button>
+                    <div class="collapsible-content">
+                        <div class="collapsible-inner">
+                            <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                                Los bouncers son servidores intermediarios que optimizan la conexión a múltiples relays.
+                            </p>
+
+                            <div class="card">
+                                <h3 style="margin-top: 0;">¿Qué es un bouncer?</h3>
+                                <p style="color: var(--text-secondary);">
+                                    Herramientas como <strong>Bostr</strong> actúan como proxy entre tu cliente y los relays. Ventajas:
+                                </p>
+                                <ul style="margin: 15px 0 15px 20px; color: var(--text-secondary);">
+                                    <li>Reducen consumo de batería y datos en móviles</li>
+                                    <li>Ocultan tu IP real ante los relays finales (privacidad)</li>
+                                    <li>Gestionan múltiples conexiones de forma eficiente</li>
+                                </ul>
+                                <p style="color: var(--text-secondary); margin-top: 15px;">
+                                    <strong>Uso:</strong> En lugar de conectar a 10 relays directamente, conectas a 1 bouncer que se conecta a los 10 por ti.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="collapsible">
+                    <button class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <span>₿ Transmisión de Bitcoin sobre Nostr</span>
+                        <span class="collapsible-icon">+</span>
+                    </button>
+                    <div class="collapsible-content">
+                        <div class="collapsible-inner">
+                            <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                                Propuesta experimental para retransmitir transacciones de Bitcoin a través de relays Nostr.
+                            </p>
+
+                            <div class="card">
+                                <h3 style="margin-top: 0;">NIP-123 (kind 28333)</h3>
+                                <p style="color: var(--text-secondary);">
+                                    Permite publicar transacciones Bitcoin ya firmadas en relays Nostr. Nodos escuchando estos relays las inyectan en la red Bitcoin.
+                                </p>
+                                <p style="color: var(--text-secondary); margin-top: 15px;">
+                                    <strong>Caso de uso:</strong> Mayor resistencia a censura al usar la red Nostr como canal alternativo de propagación de transacciones.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="collapsible">
+                    <button class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <span>👥 Desarrolladores destacados</span>
+                        <span class="collapsible-icon">+</span>
+                    </button>
+                    <div class="collapsible-content">
+                        <div class="collapsible-inner">
+                            <div class="client-list">
+                                <div class="client-item">
+                                    <div class="client-info">
+                                        <h4>gzuuus</h4>
+                                        <p>Tutoriales, presentaciones, herramientas (nostr_startr, nostree)</p>
+                                    </div>
+                                </div>
+                                <div class="client-item">
+                                    <div class="client-info">
+                                        <h4>Ricardo Arturo (Cameri)</h4>
+                                        <p>Desarrollador de nostream (relay) y Eden relay</p>
+                                    </div>
+                                </div>
+                                <div class="client-item">
+                                    <div class="client-info">
+                                        <h4>Quentin</h4>
+                                        <p>Creador de nostrcheck.me y servicios de identidad</p>
+                                    </div>
+                                </div>
+                                <div class="client-item">
+                                    <div class="client-info">
+                                        <h4>KoalaSat</h4>
+                                        <p>Desarrollador de Nostros y juegos basados en Nostr</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recursos -->
+        <section id="recursos">
+            <div class="container">
+                <h2>🔗 Recursos útiles</h2>
+                
+                <div class="card-grid">
+                    <div class="card">
+                        <h3 style="margin-top: 0;">📚 Guías en español</h3>
+                        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                            <a href="https://estudiobitcoin.com/guia-completa-del-protocolo-nostr/" target="_blank" style="color: var(--accent); text-decoration: none;">→ Guía Estudio Bitcoin</a>
+                            <a href="https://nostr.how/es/get-started" target="_blank" style="color: var(--accent); text-decoration: none;">→ nostr.how (español)</a>
+                            <a href="https://medium.com/@ishi_kawa/gu%C3%ADa-para-principiantes-en-nostr-2420f15e9045" target="_blank" style="color: var(--accent); text-decoration: none;">→ Guía de Ishikawa</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-top: 0;">🎥 Video tutoriales</h3>
+                        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                            <a href="https://youtube.com/watch?v=QdyjYiVtrnA" target="_blank" style="color: var(--accent); text-decoration: none;">→ Tutorial Lunaticoin (YouTube)</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-top: 0;">💬 Comunidad</h3>
+                        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                            <a href="https://t.me/nostrespanol" target="_blank" style="color: var(--accent); text-decoration: none;">→ Nostr Español (Telegram)</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin-top: 0;">🛠️ Herramientas</h3>
+                        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                            <a href="https://nostr.net/" target="_blank" style="color: var(--accent); text-decoration: none;">→ nostr.net (directorio apps)</a>
+                            <a href="https://njump.me/" target="_blank" style="color: var(--accent); text-decoration: none;">→ njump.me (visualizador)</a>
+                            <a href="https://nostr.directory/" target="_blank" style="color: var(--accent); text-decoration: none;">→ nostr.directory (buscar usuarios)</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter CTA -->
+        <section id="newsletter" style="background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%); padding: 60px 0;">
+            <div class="container">
+                <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+                    <h2 style="margin-bottom: 20px;">📬 Mantente actualizado</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                        Nostr evoluciona rápido. Suscríbete para recibir tutoriales, novedades y consejos.
+                    </p>
+                    <form id="newsletter-form" style="display: flex; gap: 10px; max-width: 500px; margin: 0 auto; flex-wrap: wrap;">
+                        <input 
+                            type="email" 
+                            placeholder="EN DESARROLLO" 
+                            required
+                            style="flex: 1; min-width: 200px; padding: 14px 20px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-primary); color: var(--text-primary); font-size: 1rem;"
+                        >
+                        <button type="submit" class="btn btn-primary" style="white-space: nowrap;">
+                            Suscribirme
+                        </button>
+                    </form>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 15px;">
+                        Sin spam. Cancelar cuando quieras.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Sobre este sitio</h4>
+                    <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 20px;">
+                        Guía educativa para la comunidad hispanohablante de Nostr.
+                    </p>
+                    <a href="lightning:applealpaca64@phoenixwallet.me" class="lightning-btn">
+                        ⚡ Enviar propina
+                    </a>
+                    <div style="margin-top: 15px; padding: 12px; background: var(--bg-tertiary); border-radius: 8px; border: 1px solid var(--border);">
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px;">Lightning Address:</p>
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <code id="lightning-address" style="color: var(--accent); font-size: 0.9rem; word-break: break-all; flex: 1;">applealpaca64@phoenixwallet.me</code>
+                            <button onclick="copyLightning()" class="copy-btn">
+                                📋 Copiar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Recursos</h4>
+                    <a href="https://nostr.how/es/get-started" target="_blank">nostr.how (español)</a>
+                    <a href="https://estudiobitcoin.com/guia-completa-del-protocolo-nostr/" target="_blank">Guía Estudio Bitcoin</a>
+                    <a href="https://nostr.net/" target="_blank">nostr.net (directorio apps)</a>
+                    <a href="https://njump.me/" target="_blank">njump.me (visualizador)</a>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 15px;">Encuéntrame en Nostr:</p>
+                    <a href="https://primal.net/p/nprofile1qqszj8995px29k0t0c06y5cx3wzwqvks0dejpxhnu90sqa708m9lxfs4gnym0" target="_blank">Ver mi perfil →</a>
+                    <p style="color: var(--text-secondary); margin-top: 15px; font-size: 0.9rem;">
+                        ¿Feedback? Envíame un zap o DM
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>Hecho con 💜 para la comunidad Nostr | 2026</p>
+                <p style="margin-top: 10px; font-size: 0.9rem;">
+                    <a href="https://github.com/Crackloss/nostrweb.git" target="_blank" style="color: var(--text-secondary); text-decoration: none;">Open source en GitHub</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Copy Lightning address
+        function copyLightning() {
+            const address = document.getElementById('lightning-address').textContent;
+            const btn = event.target;
+            const originalText = btn.textContent;
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(address).then(() => {
+                    btn.textContent = '✓ Copiado';
+                    btn.style.background = 'var(--accent)';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = 'var(--accent)';
+                    
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = 'var(--bg-secondary)';
+                        btn.style.color = 'var(--text-primary)';
+                        btn.style.borderColor = 'var(--border)';
+                    }, 2000);
+                }).catch(err => {
+                    fallbackCopy(address, btn, originalText);
+                });
+            } else {
+                fallbackCopy(address, btn, originalText);
+            }
+        }
+
+        // Copy relay URL
+        function copyRelay(url) {
+            const btn = event.target;
+            const originalText = btn.textContent;
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
+                    btn.textContent = '✓ Copiado';
+                    btn.style.background = 'var(--accent)';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = 'var(--accent)';
+                    
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = 'var(--bg-secondary)';
+                        btn.style.color = 'var(--text-primary)';
+                        btn.style.borderColor = 'var(--border)';
+                    }, 2000);
+                }).catch(err => {
+                    fallbackCopy(url, btn, originalText);
+                });
+            } else {
+                fallbackCopy(url, btn, originalText);
+            }
+        }
+        
+        function fallbackCopy(text, btn, originalText) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    btn.textContent = '✓ Copiado';
+                    btn.style.background = 'var(--accent)';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = 'var(--accent)';
+                    
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = 'var(--bg-secondary)';
+                        btn.style.color = 'var(--text-primary)';
+                        btn.style.borderColor = 'var(--border)';
+                    }, 2000);
+                } else {
+                    alert('Copiado: ' + text);
+                }
+            } catch (err) {
+                alert('Copiado: ' + text);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close menu when clicking a link
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const navMenu = document.getElementById('navMenu');
+                    navMenu.classList.remove('active');
+                });
+            });
+
+            // FAQ functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all items
+                    faqItems.forEach(i => i.classList.remove('active'));
+                    
+                    // Toggle current item
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+
+            // Newsletter form
+            const newsletterForm = document.getElementById('newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('¡Gracias por tu interés! La newsletter estará disponible pronto.');
+                    this.reset();
+                });
+            }
+        });
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+
+            const tabs = document.getElementsByClassName('tab');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Collapsible functionality
+        function toggleCollapsible(header) {
+            const collapsible = header.parentElement;
+            collapsible.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
